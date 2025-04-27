@@ -11,7 +11,7 @@ export default async function Home() {
   }
   return (
     <div style={{ padding: "2rem" }}>
-      <h1>Welcome to the 9d8 Archive</h1>
+      <h1 className="mb-8">Welcome to the 9d8 Archive</h1>
       <div
         style={{
           display: "grid",
