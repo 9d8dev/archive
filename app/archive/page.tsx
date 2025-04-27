@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ArchivePage() {
   const [files, setFiles] = useState<FileList | null>(null);
@@ -19,37 +19,38 @@ export default function ArchivePage() {
     setError(null);
     const formData = new FormData();
     Array.from(files).forEach((file) => {
-      formData.append('files', file);
+      formData.append("files", file);
     });
     try {
-      const res = await fetch('/api/archive', {
-        method: 'POST',
+      const res = await fetch("/api/archive", {
+        method: "POST",
         body: formData,
       });
       if (!res.ok) {
         const text = await res.text();
-        throw new Error(text || 'Upload failed');
+        throw new Error(text || "Upload failed");
       }
-      router.push('/');
-    } catch (err: any) {
-      setError(err.message || 'Upload failed');
+      router.push("/");
+    } catch (err: Error | unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Upload failed";
+      setError(errorMessage);
     } finally {
       setUploading(false);
     }
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
+    <div style={{ padding: "2rem" }}>
       <h1>Upload Images</h1>
       <input type="file" multiple onChange={handleChange} />
       <button
         onClick={handleUpload}
         disabled={!files || uploading}
-        style={{ marginLeft: '1rem' }}
+        style={{ marginLeft: "1rem" }}
       >
-        {uploading ? 'Uploading...' : 'Upload'}
+        {uploading ? "Uploading..." : "Upload"}
       </button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }

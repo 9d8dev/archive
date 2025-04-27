@@ -3,12 +3,14 @@ import type { ListBlobResultBlob } from "@vercel/blob";
 
 export default async function Home() {
   let blobs: ListBlobResultBlob[] = [];
+
   try {
     const result = await list({ prefix: "archive/" });
     blobs = result.blobs;
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error("Error fetching blobs:", error);
   }
+
   return (
     <div style={{ padding: "2rem" }}>
       <h1 className="mb-8">Welcome to the 9d8 Archive</h1>
